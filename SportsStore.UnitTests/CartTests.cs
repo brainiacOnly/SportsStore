@@ -2,6 +2,11 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SportsStore.Domain.Entities;
+using Moq;
+using SportsStore.Domain.Abstract;
+using SportsStore.WebUI.Controllers;
+using System.Web.Mvc;
+using SportsStore.WebUI.Models;
 
 namespace SportsStore.UnitTests
 {
@@ -94,6 +99,50 @@ namespace SportsStore.UnitTests
             target.Clear();
 
             Assert.AreEqual(target.Lines.Count(), 0);
+        }
+
+        [TestMethod]
+        public void CanAddToCart()
+        {
+            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            mock.Setup(m => m.Products).Returns(new[]
+            {new Product {ProductID = 1, Name = "P1", Category = "Apples"}}
+                );
+            Cart cart = new Cart();
+            CartController target = new CartController(mock.Object);
+
+            target.AddToCart(cart, 1, null);
+
+            Assert.AreEqual(cart.Lines.Count(), 1);
+            Assert.AreEqual(cart.Lines.ToArray()[0].Product.ProductID, 1);
+        }
+
+        [TestMethod]
+        public void AddingProductToCartGoesToCartScreen()
+        {
+            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            mock.Setup(m => m.Products).Returns(new[]
+            {new Product {ProductID = 1, Name = "P1", Category = "Apples"}}
+                );
+            Cart cart = new Cart();
+            CartController target = new CartController(mock.Object);
+
+            var result = target.AddToCart(cart, 1, "myUrl");
+
+            Assert.AreEqual(result.RouteValues["action"], "Index");
+            Assert.AreEqual(result.RouteValues["returnUrl"], "myUrl");
+        }
+
+        [TestMethod]
+        public void CanViewCartContents()
+        {
+            Cart cart = new Cart();
+            CartController target = new CartController(null);
+
+            var result = (CartIndexViewModel) target.Index(cart, "myUrl").ViewData.Model;
+         
+            Assert.AreEqual(result.Cart, cart);
+            Assert.AreEqual(result.ReturnUrl, "myUrl");
         }
     }
 }
