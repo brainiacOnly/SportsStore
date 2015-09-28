@@ -5,13 +5,15 @@
         <meta name="viewport" content="width=devise-width, initial-scale=1.0" />
         <link href="~/Content/bootstrap.css" rel="stylesheet"/>
         <link href="~/Content/bootstrap-theme.css" rel="stylesheet"/>
+        <link href="~/Content/ErrorStyles.css" rel="stylesheet"/>
         <title>@ViewBag.Title</title>
     </head>
 <body>
 <div class="navbar navbar-inverse" role="navigation">
     <a class="navbar-brand" href="#">SPORTS STORE</a>
+    @Html.Action("Summary", "Cart")
 </div>
-<div class="row panel">
+<div class="row panel" style="margin-right: +15px; margin-left: +15px;">
     <div id="categories" class="col-xs-3">
         @Html.Action("Menu","Nav")
     </div>
