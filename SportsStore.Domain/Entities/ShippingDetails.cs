@@ -7,6 +7,11 @@ namespace SportsStore.Domain.Entities
         [Required(ErrorMessage = "Please enter a name")]
         public string Name { get; set; }
 
+        [Required(ErrorMessage = "Please enter your e-mail")]
+        [EmailAddress(ErrorMessage = "Wrong e-mail format!")]
+        [Display(Name = "E-Mail")]
+        public string Email { get; set; }
+
         [Required(ErrorMessage = "Please enter the first address line")]
         [Display(Name = "Line 1")]
         public string Line1 { get; set; }
@@ -16,6 +21,7 @@ namespace SportsStore.Domain.Entities
 
         [Display(Name = "Line 3")]
         public string Line3 { get; set; }
+
 
         [Required(ErrorMessage = "Please enter a city name")]
         public string City { get; set; }
