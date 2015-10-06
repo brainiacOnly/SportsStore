@@ -5,7 +5,7 @@ namespace SportsStore.Domain.Entities
 {
     public class Product
     {
-        [HiddenInput(DisplayValue = false)]      
+        [HiddenInput(DisplayValue = false)]
         public int ProductID { get; set; }
 
         [Required(ErrorMessage = "Please enter a product name")]
@@ -21,5 +21,9 @@ namespace SportsStore.Domain.Entities
 
         [Required(ErrorMessage = "Please specify a category")]
         public string Category { get; set; }
+
+        public byte[] ImageData { get; set; }
+
+        public string ImageMimeType { get; set; }
     }
 }
