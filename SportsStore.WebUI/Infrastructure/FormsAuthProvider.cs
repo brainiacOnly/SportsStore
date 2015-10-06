@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Principal;
 using System.Web.Security;
 using SportsStore.WebUI.Infrastructure.Abstract;
 
@@ -14,6 +15,16 @@ namespace SportsStore.WebUI.Infrastructure
                 FormsAuthentication.SetAuthCookie(username, false);
             }
             return result;
+        }
+
+        public bool IsAuthenticated(IPrincipal user)
+        {
+            return user.Identity.IsAuthenticated;
+        }
+
+        public void Logout()
+        {
+            FormsAuthentication.SignOut();
         }
     }
 }

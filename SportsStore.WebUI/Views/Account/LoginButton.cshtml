@@ -1,0 +1,15 @@
+﻿@if (ViewBag.Identity)
+{
+    <div class="navbar-right hidden-xs">
+        @Html.ActionLink("Log out", "Logout", null, new { @class = "btn btn-block btn-primary navbar-btn" })
+    </div>
+    <div class="navbar-right hidden-xs">
+        @Html.ActionLink("Manage", "Index", "Admin", null, new { @class = "btn btn-block btn-danger navbar-btn" })
+    </div>
+}
+else
+{
+    <div class="navbar-right hidden-xs">
+        @Html.ActionLink("Log In", "Login", null, new { @class = "btn btn-block btn-primary navbar-btn" })
+    </div>
+}

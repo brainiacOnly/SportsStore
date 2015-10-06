@@ -26,7 +26,7 @@ namespace SportsStore.WebUI.Controllers
             {
                 if (authProvider.Authenticate(model.UserName, model.Password))
                 {
-                    return Redirect(returnUrl ?? Url.Action("Index", "Admin"));
+                    return Redirect(returnUrl ?? Url.Action("List", "Product"));
                 }
                 else
                 {
@@ -38,6 +38,25 @@ namespace SportsStore.WebUI.Controllers
             {
                 return View();
             }
+        }
+
+        public RedirectResult Logout()
+        {
+            authProvider.Logout();
+            return Redirect(Url.Action("List","Product"));
+        }
+
+        public PartialViewResult LoginButton()
+        {
+            if (authProvider.IsAuthenticated(User))
+            {
+                ViewBag.Identity = true;
+            }
+            else
+            {
+                ViewBag.Identity = false;
+            }
+            return PartialView();
         }
     }
 }
